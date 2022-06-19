@@ -10,19 +10,19 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RadioTest {
+//    Radio radio = new Radio();
 
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "0; 0",
-                    "1; 0",
-                    "5; 4"
+                    "9; 0; 9",
+                    "9; 1; 0",
+                    "9; 5; 4"
             }
             , delimiter = ';'
     )
-    public void increaseMixStation(int stationNow, int expected) {
-        Radio radio = new Radio();
-
+    public void increaseMixStation(int pastStation, int stationNow, int expected) {
+        Radio radio = new Radio(pastStation);
         radio.setCurrentStation(stationNow);
 
         radio.pressPrevStation();
@@ -34,15 +34,14 @@ public class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "5; 6",
-                    "8; 9",
-                    "9; 0"
+                    "9; 5; 6",
+                    "9; 8; 9",
+                    "9; 9; 0"
             }
             , delimiter = ';'
     )
-    public void increaseMaxStation(int stationNow, int expected) {
-        Radio radio = new Radio();
-
+    public void increaseMaxStation(int pastStation, int stationNow, int expected) {
+        Radio radio = new Radio(pastStation);
         radio.setCurrentStation(stationNow);
 
         radio.pressNextStation();
@@ -75,8 +74,8 @@ public class RadioTest {
     @CsvSource(
             value = {
                     "5; 6",
-                    "9; 10",
-                    "10; 0"
+                    "99; 100",
+                    "100; 0"
             }
             , delimiter = ';'
     )
@@ -97,13 +96,14 @@ public class RadioTest {
                     "1; 1",
                     "5; 5",
                     "10; 10",
-                    "11; 0",
+                    "101; 0",
                     "-1; 0"
             }
             , delimiter = ';'
     )
     public void intervalVolume(int soundVolume, int expected) {
         Radio radio = new Radio();
+
         radio.setCurrentVolume(soundVolume);
 
         int actual = radio.getCurrentVolume();
@@ -113,16 +113,18 @@ public class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "1; 1",
-                    "5; 5",
-                    "9; 9",
-                    "10; 0",
-                    "-1; 0"
+                    "9; 1; 1",
+                    "9; 5; 5",
+                    "9; 9; 9",
+                    "9; 10; 0",
+                    "9; 0; 0",
+                    "9; -1; 0"
             }
             , delimiter = ';'
     )
-    public void intervalStation(int stationNumber, int expected) {
-        Radio radio = new Radio();
+    public void intervalStation(int pastStation, int stationNumber, int expected) {
+        Radio radio = new Radio(pastStation);
+
         radio.setCurrentStation(stationNumber);
 
         int actual = radio.getCurrentStation();
