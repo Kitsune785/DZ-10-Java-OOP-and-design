@@ -10,19 +10,18 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RadioTest {
-//    Radio radio = new Radio();
 
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "9; 0; 9",
-                    "9; 1; 0",
-                    "9; 5; 4"
+                    "10; 1; 0",
+                    "10; 0; 9",
+                    "10; 2; 1"
             }
             , delimiter = ';'
     )
-    public void increaseMixStation(int pastStation, int stationNow, int expected) {
-        Radio radio = new Radio(pastStation);
+    public void increaseMixStation(int size, int stationNow, int expected) {
+        Radio radio = new Radio(size);
         radio.setCurrentStation(stationNow);
 
         radio.pressPrevStation();
@@ -34,14 +33,14 @@ public class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "9; 5; 6",
-                    "9; 8; 9",
-                    "9; 9; 0"
+                    "10; 9; 0",
+                    "10; 6; 7",
+                    "10; 8; 9"
             }
             , delimiter = ';'
     )
-    public void increaseMaxStation(int pastStation, int stationNow, int expected) {
-        Radio radio = new Radio(pastStation);
+    public void increaseMaxStation(int size, int stationNow, int expected) {
+        Radio radio = new Radio(size);
         radio.setCurrentStation(stationNow);
 
         radio.pressNextStation();
@@ -116,9 +115,8 @@ public class RadioTest {
                     "9; 1; 1",
                     "9; 5; 5",
                     "9; 9; 9",
-                    "9; 10; 0",
-                    "9; 0; 0",
-                    "9; -1; 0"
+                    "9; 10; 9",
+                    "9; 0; 0"
             }
             , delimiter = ';'
     )
@@ -191,6 +189,3 @@ public class RadioTest {
 //        Assertions.assertEquals(expected, actual);
 //    }
 }
-
-
-
